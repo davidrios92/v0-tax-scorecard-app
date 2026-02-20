@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fafaf9;
+  --foreground: #00473e;
+  --card: #ffffff;
+  --card-foreground: #00473e;
+  --popover: #ffffff;
+  --popover-foreground: #00473e;
+  --primary: #00473e;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f0ee;
+  --secondary-foreground: #00473e;
+  --muted: #f1f0ee;
+  --muted-foreground: rgba(0, 71, 62, 0.55);
+  --accent: #f1f0ee;
+  --accent-foreground: #00473e;
+  --destructive: #dc2626;
+  --destructive-foreground: #dc2626;
+  --border: #e5e2dd;
+  --input: #e5e2dd;
+  --ring: #00473e;
+  --chart-1: #eb6244;
+  --chart-2: #00473e;
+  --chart-3: #f5893d;
+  --chart-4: #f06740;
+  --chart-5: #00352e;
+  --radius: 0.75rem;
+  --awts-orange-start: #eb6244;
+  --awts-orange-end: #f5893d;
+  --awts-footer: #212121;
+  --awts-footer-accent: #f06740;
+  --awts-subheader: rgba(0, 71, 62, 0.7);
+}
+
+@theme inline {
+  --font-sans: 'Inter', 'Inter Fallback', sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes score-fill {
+  from {
+    stroke-dashoffset: 283;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
