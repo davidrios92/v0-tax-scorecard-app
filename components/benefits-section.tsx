@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  Building2,
+  Truck,
   Search,
   TrendingUp,
   Landmark,
@@ -10,34 +10,34 @@ import {
 
 const benefits = [
   {
-    icon: Building2,
-    title: "Structure Review",
+    icon: Truck,
+    title: "Ute & Vehicle Setup",
     description:
-      "Evaluate whether your current business structure is optimised for tax efficiency and liability protection.",
+      "Are you claiming your ute, van or work vehicle the right way? We check if your setup is costing you or saving you.",
   },
   {
     icon: Search,
-    title: "Deductions Audit",
+    title: "Missed Deductions",
     description:
-      "Identify commonly missed deductions and ensure you are claiming everything you are entitled to.",
+      "Tools, PPE, fuel, phone, training -- most tradies leave thousands on the table. We find what you are not claiming.",
   },
   {
     icon: TrendingUp,
-    title: "GST & Cashflow Health",
+    title: "GST & BAS Health",
     description:
-      "Assess your GST management practices and cashflow habits to avoid unnecessary BAS stress.",
+      "Late BAS, messy GST and cashflow gaps kill trade businesses. We check your habits so you stop getting stung.",
   },
   {
     icon: Landmark,
-    title: "Asset Planning",
+    title: "Structure & Setup",
     description:
-      "Review your asset ownership structure and upcoming purchases for maximum tax advantage.",
+      "Sole trader vs. company vs. trust -- the wrong structure can mean thousands in extra tax. We tell you where you stand.",
   },
   {
     icon: ShieldAlert,
-    title: "ATO Risk Check",
+    title: "ATO Red Flags",
     description:
-      "Flag potential compliance risks before they become costly ATO audits or penalties.",
+      "The ATO targets tradies more than almost any other industry. We flag the risks before you get a nasty letter.",
   },
 ]
 
@@ -47,11 +47,11 @@ export function BenefitsSection() {
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-[var(--foreground)] lg:text-4xl">
-            What your scorecard covers
+            What we check for your trade business
           </h2>
           <p className="mt-4 text-lg text-[var(--awts-subheader)]">
-            Five key areas analysed to give you a complete picture of your tax
-            position.
+            Five areas where tradies lose the most money -- and where you can
+            claw it back.
           </p>
         </div>
 

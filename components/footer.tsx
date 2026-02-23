@@ -17,8 +17,9 @@ export function Footer({ onStartScorecard }: FooterProps) {
               <span className="text-xl font-bold text-white">AWTS</span>
             </div>
             <p className="text-sm leading-relaxed text-white/60">
-              Australian-owned tax and accounting specialists helping businesses
-              optimise their tax position and grow with confidence.
+              Australian-owned tax and accounting specialists helping tradies
+              pay less tax, stay off the ATO radar and grow their trade
+              business with confidence.
             </p>
           </div>
 
@@ -59,8 +60,8 @@ export function Footer({ onStartScorecard }: FooterProps) {
               Get Started
             </h3>
             <p className="mb-4 text-sm text-white/60">
-              Take the free Tax Optimisation Scorecard and discover your savings
-              potential.
+              Take the free Tax Scorecard built for tradies and find out how
+              much you could be saving.
             </p>
             <button
               onClick={onStartScorecard}

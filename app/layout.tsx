@@ -6,9 +6,9 @@ import './globals.css'
 const _inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'AWTS Tax Optimisation Scorecard | Maximise Your Tax Return',
+  title: 'AWTS Tax Scorecard for Tradies | Stop Overpaying Tax',
   description:
-    'Free Tax Optimisation Scorecard from AWTS. Identify risks, missed deductions and potential savings for your Australian business.',
+    'Free Tax Scorecard built for Australian tradies. Find missed deductions, flag ATO risks and uncover real savings for your trade business.',
   generator: 'v0.app',
   icons: {
     icon: [

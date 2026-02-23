@@ -9,24 +9,29 @@ import {
 
 const faqs = [
   {
-    question: "Is the Tax Optimisation Scorecard really free?",
+    question: "Is this actually free or is there a catch?",
     answer:
-      "Yes, completely free. We provide the scorecard as a service to help Australian businesses understand their current tax position. There is no obligation to use our paid services afterwards.",
+      "No catch. The scorecard is 100% free. We built it to help tradies see where they stand with their tax -- if you want help acting on the results, we are here, but there is zero obligation.",
   },
   {
-    question: "How long does the scorecard take to complete?",
+    question: "I am a sole trader sparky -- is this relevant to me?",
     answer:
-      "The questionnaire takes approximately 2\u20133 minutes to complete. Our AI engine then analyses your responses and returns your personalised report within seconds.",
+      "Absolutely. Whether you are a sole trader, running a company or using a trust, the scorecard covers structure, deductions, vehicles, GST and ATO risks that apply to every trade -- plumbing, electrical, building, concreting, landscaping, you name it.",
   },
   {
-    question: "Is my information kept confidential?",
+    question: "How long does it take? I am flat out on site.",
     answer:
-      "Absolutely. All information you provide is encrypted and stored securely. We only use your responses to generate your scorecard and will never share your data with third parties without your consent.",
+      "Under 3 minutes. We kept it short on purpose -- no jargon, no essays. You can knock it out on a smoko or waiting for a delivery.",
   },
   {
-    question: "What happens after I receive my scorecard?",
+    question: "Is my information kept private?",
     answer:
-      "You will receive a detailed report showing your tax optimisation score, key risks, quick wins and recommended next steps. If you would like help implementing the recommendations, you can book a free 15-minute call with one of our tax specialists.",
+      "Yes. All your information is encrypted and stored securely. We only use your responses to generate your scorecard and will never share your data with anyone without your consent.",
+  },
+  {
+    question: "What happens after I get my score?",
+    answer:
+      "You will see your score, the biggest risks to fix, quick wins you can act on now and clear next steps. If you want a hand putting it into action, you can book a free 15-minute call with one of our tax specialists who work with tradies every day.",
   },
 ]
 

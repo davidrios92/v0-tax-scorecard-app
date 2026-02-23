@@ -10,23 +10,23 @@ const steps = [
   {
     icon: ClipboardList,
     step: "01",
-    title: "Answer questions",
+    title: "Answer a few quick questions",
     description:
-      "Complete our quick 5-section scorecard about your business structure, deductions and tax habits.",
+      "Tell us about your trade, how you pay yourself, your ute setup and tax habits. No accounting knowledge needed.",
   },
   {
     icon: Cpu,
     step: "02",
-    title: "AI analysis",
+    title: "We crunch the numbers",
     description:
-      "Our AI engine analyses your responses against best-practice tax strategies for Australian businesses.",
+      "Our engine compares your answers against the best-practice tax strategies used by the top-performing trade businesses in Australia.",
   },
   {
     icon: FileCheck,
     step: "03",
-    title: "Get action plan",
+    title: "Get your tradie tax plan",
     description:
-      "Receive a personalised report with your score, risks, quick wins and recommended next steps.",
+      "Receive a personalised report with your score, the ATO risks to fix first, quick wins and clear next steps.",
   },
 ]
 
@@ -39,7 +39,7 @@ export function HowItWorksSection({ onStartScorecard }: HowItWorksSectionProps) 
             How it works
           </h2>
           <p className="mt-4 text-lg text-[var(--awts-subheader)]">
-            Three simple steps to a clearer tax picture.
+            Three simple steps -- done before your smoko is over.
           </p>
         </div>
 
@@ -79,7 +79,7 @@ export function HowItWorksSection({ onStartScorecard }: HowItWorksSectionProps) 
               background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
             }}
           >
-            Start Your Free Scorecard
+            Get My Free Tax Score
           </button>
         </div>
       </div>

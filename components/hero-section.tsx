@@ -1,16 +1,16 @@
 "use client"
 
-import { ArrowRight, Star, Users, ShieldCheck, Clock, UserCheck } from "lucide-react"
+import { ArrowRight, Star, HardHat, ShieldCheck, Clock, Wrench } from "lucide-react"
 
 interface HeroSectionProps {
   onStartScorecard: () => void
 }
 
 const trustIndicators = [
-  { icon: Users, label: "10k+ annual returns" },
+  { icon: HardHat, label: "Built for tradies" },
   { icon: ShieldCheck, label: "Australian owned" },
-  { icon: Clock, label: "Efficient service" },
-  { icon: UserCheck, label: "Personalised service" },
+  { icon: Wrench, label: "All trades covered" },
+  { icon: Clock, label: "Under 3 minutes" },
   { icon: Star, label: "4.9 rating" },
 ]
 
@@ -28,13 +28,13 @@ export function HeroSection({ onStartScorecard }: HeroSectionProps) {
                 background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
               }}
             />
-            Free Tax Optimisation Scorecard
+            Free Tax Scorecard for Tradies
           </div>
 
           <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[var(--foreground)] lg:text-6xl lg:leading-[1.1]">
-            Maximise your tax return with{" "}
+            Stop overpaying tax on your{" "}
             <span className="relative">
-              AWTS tax experts
+              trade business
               <span
                 className="absolute -bottom-1 left-0 h-1 w-full rounded-full"
                 style={{
@@ -45,9 +45,10 @@ export function HeroSection({ onStartScorecard }: HeroSectionProps) {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--awts-subheader)]">
-            Our free Tax Optimisation Scorecard analyses your business structure,
-            deductions, and compliance to identify risks, missed deductions, and
-            potential savings — in minutes.
+            Whether you are a sparky, plumber, builder or concreter -- our free
+            Tax Scorecard spots the deductions you are missing, flags ATO risks
+            and shows you where the real savings are. Built specifically for
+            Australian tradies.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -58,11 +59,11 @@ export function HeroSection({ onStartScorecard }: HeroSectionProps) {
                 background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
               }}
             >
-              Start Free Tax Scorecard
+              Get My Free Tax Score
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
             </button>
             <p className="text-sm text-[var(--muted-foreground)]">
-              Takes less than 3 minutes
+              Takes less than 3 minutes -- no jargon, no BS
             </p>
           </div>
         </div>
