@@ -32,9 +32,9 @@ export function HeroSection({ onStartScorecard }: HeroSectionProps) {
           </div>
 
           <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[var(--foreground)] lg:text-6xl lg:leading-[1.1]">
-            Stop overpaying tax on your{" "}
+            Are you overpaying tax in your{" "}
             <span className="relative">
-              trade business
+              trade business?
               <span
                 className="absolute -bottom-1 left-0 h-1 w-full rounded-full"
                 style={{
