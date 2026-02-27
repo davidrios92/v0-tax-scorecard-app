@@ -1,4 +1,4 @@
-export const N8N_WEBHOOK_URL = "https://your-n8n-webhook-url"
+export const N8N_WEBHOOK_URL = "https://theagencyalternative.app.n8n.cloud/webhook-test/AWTS-taxes"
 
 export interface ScorecardSection {
   id: string
