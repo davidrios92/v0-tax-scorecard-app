@@ -2,11 +2,9 @@
 
 import {
   AlertTriangle,
-  Zap,
-  ListChecks,
-  DollarSign,
+  Lightbulb,
   Phone,
-  FileText,
+  Download,
 } from "lucide-react"
 import type { ScorecardResult } from "@/lib/scorecard-config"
 
@@ -15,47 +13,54 @@ interface ScorecardResultsProps {
   onRestart: () => void
 }
 
-function tierColor(tier: string) {
-  switch (tier) {
-    case "High":
-      return { bg: "#dc2626", text: "#ffffff" }
-    case "Medium":
-      return { bg: "#f5893d", text: "#ffffff" }
-    case "Low":
-      return { bg: "#16a34a", text: "#ffffff" }
+function getBandColor(band: string) {
+  switch (band) {
+    case "high":
+      return { bg: "#dc2626", text: "#ffffff", label: "High Risk" }
+    case "moderate":
+      return { bg: "#f5893d", text: "#ffffff", label: "Moderate Risk" }
+    case "low":
+      return { bg: "#16a34a", text: "#ffffff", label: "Low Risk" }
     default:
-      return { bg: "#6b7280", text: "#ffffff" }
+      return { bg: "#6b7280", text: "#ffffff", label: "Risk" }
   }
-}
-
-function formatAUD(amount: number) {
-  return new Intl.NumberFormat("en-AU", {
-    style: "currency",
-    currency: "AUD",
-    maximumFractionDigits: 0,
-  }).format(amount)
 }
 
 export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
-  const tier = tierColor(result?.tier ?? "Medium")
-  const circumference = 2 * Math.PI * 45
-  const score = result?.score ?? 50
-  const offset = circumference - (score / 100) * circumference
+  // Handle both array response and single object
+  const data = Array.isArray(result) ? result[0] : result
 
-  const keyRisks = result?.keyRisks ?? []
-  const quickWins = result?.quickWins ?? []
-  const recommendedNextSteps = result?.recommendedNextSteps ?? []
-  const estimatedSavingsRange = result?.estimatedSavingsRange ?? {
-    min: 0,
-    max: 0,
-    currency: "AUD",
+  const scorecard = data?.scorecard ?? {
+    taxEfficiencyScore: 50,
+    riskScore: 50,
+    leakageBand: "moderate" as const,
+    leakageLabel: "Moderate Leakage Detected",
+    urgencyLevel: 2,
   }
+
+  const findings = data?.findings ?? {
+    riskFlags: [],
+    opportunities: [],
+    flagCount: 0,
+  }
+
+  const pdf = data?.pdf ?? { url: "", fileName: "" }
+  const cta = data?.cta ?? {
+    message: "Book a free 30-minute strategy call with an AWTS specialist.",
+    bookingUrl:
+      "https://api.callconnect360.com/widget/bookings/discoverysessions1-15622ab6-ed84-4dd2-b9a4-b073072c17f2",
+  }
+
+  const band = getBandColor(scorecard.leakageBand)
+  const circumference = 2 * Math.PI * 45
+  const offset =
+    circumference - (scorecard.taxEfficiencyScore / 100) * circumference
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Top bar */}
       <div className="border-b bg-[var(--card)]">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 lg:px-8">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 lg:px-8">
           <div className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]">
               <span className="text-sm font-bold text-[var(--primary-foreground)]">
@@ -75,99 +80,101 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4 py-8 lg:py-12 lg:px-8">
+      <div className="mx-auto max-w-3xl px-4 py-8 lg:py-12 lg:px-8">
         {/* Score Header */}
-        <div className="mb-8 flex flex-col items-center gap-6 rounded-2xl border bg-[var(--card)] p-8 shadow-sm md:flex-row md:gap-10">
-          {/* Score gauge */}
-          <div className="relative flex size-36 shrink-0 items-center justify-center">
-            <svg
-              className="-rotate-90"
-              width="144"
-              height="144"
-              viewBox="0 0 100 100"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="var(--secondary)"
-                strokeWidth="8"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke={tier.bg}
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={offset}
-                style={{
-                  animation: "score-fill 1.5s ease-out forwards",
-                }}
-              />
-            </svg>
-            <div className="absolute flex flex-col items-center">
-              <span className="text-3xl font-bold text-[var(--foreground)]">
-                {score}
-              </span>
-              <span className="text-xs text-[var(--muted-foreground)]">
-                / 100
-              </span>
-            </div>
-          </div>
-
-          <div className="flex-1 text-center md:text-left">
-            <div className="mb-3 flex items-center justify-center gap-3 md:justify-start">
-              <span
-                className="rounded-full px-4 py-1.5 text-sm font-bold"
-                style={{ backgroundColor: tier.bg, color: tier.text }}
+        <div className="mb-8 rounded-2xl border bg-[var(--card)] p-6 shadow-sm lg:p-8">
+          <div className="flex flex-col items-center gap-6 md:flex-row md:gap-8">
+            {/* Score gauge */}
+            <div className="relative flex size-32 shrink-0 items-center justify-center">
+              <svg
+                className="-rotate-90"
+                width="128"
+                height="128"
+                viewBox="0 0 100 100"
               >
-                {result.tier} Risk
-              </span>
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  fill="none"
+                  stroke="var(--secondary)"
+                  strokeWidth="8"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  fill="none"
+                  stroke={band.bg}
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={offset}
+                  style={{
+                    animation: "score-fill 1.5s ease-out forwards",
+                  }}
+                />
+              </svg>
+              <div className="absolute flex flex-col items-center">
+                <span className="text-2xl font-bold text-[var(--foreground)]">
+                  {scorecard.taxEfficiencyScore}
+                </span>
+                <span className="text-xs text-[var(--muted-foreground)]">
+                  / 100
+                </span>
+              </div>
             </div>
-            <h1 className="text-balance text-2xl font-bold text-[var(--foreground)] lg:text-3xl">
-              {result?.headline ?? "Your Tax Scorecard Results"}
-            </h1>
-            <p className="mt-3 text-pretty leading-relaxed text-[var(--awts-subheader)]">
-              {result?.summary ?? "Review your results below and book a call to discuss your next steps."}
-            </p>
+
+            <div className="flex-1 text-center md:text-left">
+              <span
+                className="mb-3 inline-block rounded-full px-4 py-1.5 text-sm font-bold"
+                style={{ backgroundColor: band.bg, color: band.text }}
+              >
+                {band.label}
+              </span>
+              <h1 className="text-balance text-xl font-bold text-[var(--foreground)] lg:text-2xl">
+                {scorecard.leakageLabel}
+              </h1>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted-foreground)]">
+                {cta.message}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Key Risks */}
-          <div className="rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
+        {/* Risk Flags */}
+        {findings.riskFlags.length > 0 && (
+          <div className="mb-6 rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex size-10 items-center justify-center rounded-xl bg-red-50">
                 <AlertTriangle className="size-5 text-red-600" />
               </div>
               <h2 className="text-lg font-semibold text-[var(--foreground)]">
-                Key Risks
+                Risk Flags ({findings.flagCount})
               </h2>
             </div>
             <ul className="flex flex-col gap-3">
-              {keyRisks.length > 0 ? (
-                keyRisks.map((risk, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                  >
-                    <span className="mt-1.5 block size-1.5 shrink-0 rounded-full bg-red-500" />
-                    {risk}
-                  </li>
-                ))
-              ) : (
-                <li className="text-sm text-[var(--muted-foreground)]">No major risks identified.</li>
-              )}
+              {findings.riskFlags.map((flag, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 rounded-lg bg-red-50/50 p-3 text-sm"
+                >
+                  <span className="mt-0.5 block size-2 shrink-0 rounded-full bg-red-500" />
+                  <span className="flex-1 text-[var(--foreground)]">
+                    {flag.trigger}
+                  </span>
+                  <span className="shrink-0 rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700">
+                    +{flag.points} pts
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
+        )}
 
-          {/* Quick Wins */}
-          <div className="rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
+        {/* Opportunities */}
+        {findings.opportunities.length > 0 && (
+          <div className="mb-8 rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-3">
               <div
                 className="flex size-10 items-center justify-center rounded-xl"
@@ -176,107 +183,55 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
                     "linear-gradient(30deg, rgba(235,98,68,0.1), rgba(245,137,61,0.1))",
                 }}
               >
-                <Zap className="size-5 text-[var(--chart-1)]" />
+                <Lightbulb className="size-5 text-[var(--chart-1)]" />
               </div>
               <h2 className="text-lg font-semibold text-[var(--foreground)]">
-                Quick Wins
+                Opportunities
               </h2>
             </div>
             <ul className="flex flex-col gap-3">
-              {quickWins.length > 0 ? (
-                quickWins.map((win, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                  >
-                    <span
-                      className="mt-1.5 block size-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: "var(--chart-1)" }}
-                    />
-                    {win}
-                  </li>
-                ))
-              ) : (
-                <li className="text-sm text-[var(--muted-foreground)]">Complete the scorecard to see quick wins.</li>
-              )}
+              {findings.opportunities.map((opportunity, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 text-sm leading-relaxed text-[var(--awts-subheader)]"
+                >
+                  <span
+                    className="mt-1.5 block size-1.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: "var(--chart-1)" }}
+                  />
+                  {opportunity}
+                </li>
+              ))}
             </ul>
           </div>
-
-          {/* Recommended Next Steps */}
-          <div className="rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-[var(--primary)]/10">
-                <ListChecks className="size-5 text-[var(--primary)]" />
-              </div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">
-                Recommended Next Steps
-              </h2>
-            </div>
-            <ol className="flex flex-col gap-3">
-              {recommendedNextSteps.length > 0 ? (
-                recommendedNextSteps.map((step, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                  >
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--primary-foreground)]">
-                      {i + 1}
-                    </span>
-                    {step}
-                  </li>
-                ))
-              ) : (
-                <li className="text-sm text-[var(--muted-foreground)]">Book a call to discuss your next steps.</li>
-              )}
-            </ol>
-          </div>
-
-          {/* Estimated Savings */}
-          <div className="rounded-2xl border bg-[var(--card)] p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-green-50">
-                <DollarSign className="size-5 text-green-600" />
-              </div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">
-                Estimated Savings
-              </h2>
-            </div>
-            <div className="flex flex-col items-center rounded-xl bg-[var(--secondary)] p-6">
-              <span className="text-sm text-[var(--muted-foreground)]">
-                Potential annual savings
-              </span>
-              <span className="mt-2 text-3xl font-bold text-[var(--foreground)]">
-                {formatAUD(estimatedSavingsRange.min)} &ndash;{" "}
-                {formatAUD(estimatedSavingsRange.max)}
-              </span>
-              <span className="mt-1 text-sm text-[var(--muted-foreground)]">
-                {estimatedSavingsRange.currency}
-              </span>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* CTAs */}
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
-            href="https://api.callconnect360.com/widget/bookings/discoverysessions1-15622ab6-ed84-4dd2-b9a4-b073072c17f2"
+            href={cta.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-110"
+            className="flex w-full items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-110 sm:w-auto"
             style={{
               background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
             }}
           >
             <Phone className="size-5" />
-            Book Free 15-Min Call
+            Book Free 30-Min Call
           </a>
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 rounded-xl border-2 border-[var(--primary)] px-8 py-4 text-base font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--secondary)]"
-          >
-            <FileText className="size-5" />
-            Download PDF
-          </button>
+          {pdf.url && (
+            <a
+              href={pdf.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              download={pdf.fileName}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--primary)] px-8 py-4 text-base font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--secondary)] sm:w-auto"
+            >
+              <Download className="size-5" />
+              Download PDF
+            </a>
+          )}
         </div>
       </div>
     </div>

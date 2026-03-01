@@ -161,7 +161,9 @@ export function ScorecardForm({ onComplete, onError, onBack }: ScorecardFormProp
         throw new Error(`Server responded with ${res.status}`)
       }
 
-      const result: ScorecardResult = await res.json()
+      const json = await res.json()
+      // n8n may return an array or a single object
+      const result: ScorecardResult = Array.isArray(json) ? json[0] : json
       localStorage.removeItem("awts-scorecard-answers")
       onComplete(result)
     } catch {

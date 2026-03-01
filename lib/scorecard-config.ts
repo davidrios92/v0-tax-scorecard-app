@@ -25,17 +25,39 @@ export interface LeadInfo {
 }
 
 export interface ScorecardResult {
-  score: number
-  tier: "Low" | "Medium" | "High"
-  headline: string
-  summary: string
-  keyRisks: string[]
-  quickWins: string[]
-  recommendedNextSteps: string[]
-  estimatedSavingsRange: {
-    min: number
-    max: number
-    currency: "AUD"
+  status: string
+  lead: {
+    name: string
+    email: string
+    phone: string
+    businessName: string
+    state: string
+  }
+  scorecard: {
+    taxEfficiencyScore: number
+    riskScore: number
+    leakageBand: "low" | "moderate" | "high"
+    leakageLabel: string
+    urgencyLevel: number
+  }
+  findings: {
+    riskFlags: Array<{ trigger: string; points: number }>
+    opportunities: string[]
+    flagCount: number
+  }
+  pdf: {
+    url: string
+    fileName: string
+    expiresAt: string
+  }
+  cta: {
+    message: string
+    bookingUrl: string
+  }
+  validations: {
+    hasPdfUrl: boolean
+    hasRiskFlags: boolean
+    hasOpportunities: boolean
   }
 }
 
