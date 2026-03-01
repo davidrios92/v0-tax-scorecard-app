@@ -18,9 +18,9 @@ export function Header({ onStartScorecard }: HeaderProps) {
           <Image
             src="/images/awts-logo.png"
             alt="AWTS - Australia Wide Tax Solutions"
-            width={160}
-            height={48}
-            className="h-10 w-auto"
+            width={200}
+            height={60}
+            className="h-14 w-auto"
             priority
           />
         </a>
