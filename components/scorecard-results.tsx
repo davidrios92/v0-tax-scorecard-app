@@ -37,9 +37,19 @@ function formatAUD(amount: number) {
 }
 
 export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
-  const tier = tierColor(result.tier)
+  const tier = tierColor(result?.tier ?? "Medium")
   const circumference = 2 * Math.PI * 45
-  const offset = circumference - (result.score / 100) * circumference
+  const score = result?.score ?? 50
+  const offset = circumference - (score / 100) * circumference
+
+  const keyRisks = result?.keyRisks ?? []
+  const quickWins = result?.quickWins ?? []
+  const recommendedNextSteps = result?.recommendedNextSteps ?? []
+  const estimatedSavingsRange = result?.estimatedSavingsRange ?? {
+    min: 0,
+    max: 0,
+    currency: "AUD",
+  }
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
@@ -101,7 +111,7 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
             </svg>
             <div className="absolute flex flex-col items-center">
               <span className="text-3xl font-bold text-[var(--foreground)]">
-                {result.score}
+                {score}
               </span>
               <span className="text-xs text-[var(--muted-foreground)]">
                 / 100
@@ -119,10 +129,10 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
               </span>
             </div>
             <h1 className="text-balance text-2xl font-bold text-[var(--foreground)] lg:text-3xl">
-              {result.headline}
+              {result?.headline ?? "Your Tax Scorecard Results"}
             </h1>
             <p className="mt-3 text-pretty leading-relaxed text-[var(--awts-subheader)]">
-              {result.summary}
+              {result?.summary ?? "Review your results below and book a call to discuss your next steps."}
             </p>
           </div>
         </div>
@@ -140,15 +150,19 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
               </h2>
             </div>
             <ul className="flex flex-col gap-3">
-              {result.keyRisks.map((risk, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                >
-                  <span className="mt-1.5 block size-1.5 shrink-0 rounded-full bg-red-500" />
-                  {risk}
-                </li>
-              ))}
+              {keyRisks.length > 0 ? (
+                keyRisks.map((risk, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
+                  >
+                    <span className="mt-1.5 block size-1.5 shrink-0 rounded-full bg-red-500" />
+                    {risk}
+                  </li>
+                ))
+              ) : (
+                <li className="text-sm text-[var(--muted-foreground)]">No major risks identified.</li>
+              )}
             </ul>
           </div>
 
@@ -169,18 +183,22 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
               </h2>
             </div>
             <ul className="flex flex-col gap-3">
-              {result.quickWins.map((win, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                >
-                  <span
-                    className="mt-1.5 block size-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: "var(--chart-1)" }}
-                  />
-                  {win}
-                </li>
-              ))}
+              {quickWins.length > 0 ? (
+                quickWins.map((win, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-sm leading-relaxed text-[var(--awts-subheader)]"
+                  >
+                    <span
+                      className="mt-1.5 block size-1.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: "var(--chart-1)" }}
+                    />
+                    {win}
+                  </li>
+                ))
+              ) : (
+                <li className="text-sm text-[var(--muted-foreground)]">Complete the scorecard to see quick wins.</li>
+              )}
             </ul>
           </div>
 
@@ -195,17 +213,21 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
               </h2>
             </div>
             <ol className="flex flex-col gap-3">
-              {result.recommendedNextSteps.map((step, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-[var(--awts-subheader)]"
-                >
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--primary-foreground)]">
-                    {i + 1}
-                  </span>
-                  {step}
-                </li>
-              ))}
+              {recommendedNextSteps.length > 0 ? (
+                recommendedNextSteps.map((step, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-[var(--awts-subheader)]"
+                  >
+                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--primary-foreground)]">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))
+              ) : (
+                <li className="text-sm text-[var(--muted-foreground)]">Book a call to discuss your next steps.</li>
+              )}
             </ol>
           </div>
 
@@ -224,11 +246,11 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
                 Potential annual savings
               </span>
               <span className="mt-2 text-3xl font-bold text-[var(--foreground)]">
-                {formatAUD(result.estimatedSavingsRange.min)} &ndash;{" "}
-                {formatAUD(result.estimatedSavingsRange.max)}
+                {formatAUD(estimatedSavingsRange.min)} &ndash;{" "}
+                {formatAUD(estimatedSavingsRange.max)}
               </span>
               <span className="mt-1 text-sm text-[var(--muted-foreground)]">
-                {result.estimatedSavingsRange.currency}
+                {estimatedSavingsRange.currency}
               </span>
             </div>
           </div>
