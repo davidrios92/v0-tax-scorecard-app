@@ -237,7 +237,9 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
         {/* CTAs */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
-            href="#"
+            href="https://api.callconnect360.com/widget/bookings/discoverysessions1-15622ab6-ed84-4dd2-b9a4-b073072c17f2"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-110"
             style={{
               background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
@@ -246,13 +248,13 @@ export function ScorecardResults({ result, onRestart }: ScorecardResultsProps) {
             <Phone className="size-5" />
             Book Free 15-Min Call
           </a>
-          <a
-            href="#"
+          <button
+            onClick={() => window.print()}
             className="flex items-center gap-2 rounded-xl border-2 border-[var(--primary)] px-8 py-4 text-base font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--secondary)]"
           >
             <FileText className="size-5" />
-            Get a Quote
-          </a>
+            Download PDF
+          </button>
         </div>
       </div>
     </div>
