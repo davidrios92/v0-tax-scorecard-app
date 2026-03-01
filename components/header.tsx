@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
+import Image from "next/image"
 
 interface HeaderProps {
   onStartScorecard: () => void
@@ -13,16 +14,16 @@ export function Header({ onStartScorecard }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b bg-[var(--card)]/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 lg:px-8">
-        <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]">
-            <span className="text-sm font-bold text-[var(--primary-foreground)]">
-              AW
-            </span>
-          </div>
-          <span className="text-xl font-bold text-[var(--foreground)]">
-            AWTS
-          </span>
-        </div>
+        <a href="/" className="flex items-center">
+          <Image
+            src="/images/awts-logo.png"
+            alt="AWTS - Australia Wide Tax Solutions"
+            width={160}
+            height={48}
+            className="h-10 w-auto"
+            priority
+          />
+        </a>
 
         <nav className="hidden items-center gap-8 md:flex">
           <a

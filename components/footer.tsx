@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 interface FooterProps {
   onStartScorecard: () => void
 }
@@ -10,11 +12,14 @@ export function Footer({ onStartScorecard }: FooterProps) {
       <div className="mx-auto max-w-6xl px-4 py-16 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
-                <span className="text-sm font-bold text-white">AW</span>
-              </div>
-              <span className="text-xl font-bold text-white">AWTS</span>
+            <div className="mb-4">
+              <Image
+                src="/images/awts-logo.png"
+                alt="AWTS - Australia Wide Tax Solutions"
+                width={160}
+                height={48}
+                className="h-10 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-sm leading-relaxed text-white/60">
               Australian-owned tax and accounting specialists helping tradies
