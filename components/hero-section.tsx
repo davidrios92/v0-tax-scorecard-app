@@ -32,16 +32,7 @@ export function HeroSection({ onStartScorecard }: HeroSectionProps) {
           </div>
 
           <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-[var(--foreground)] lg:text-6xl lg:leading-[1.1]">
-            Are you overpaying tax in your{" "}
-            <span className="relative">
-              trade/construction business?
-              <span
-                className="absolute -bottom-1 left-0 h-1 w-full rounded-full"
-                style={{
-                  background: "linear-gradient(30deg, #eb6244, #f5893d 100%)",
-                }}
-              />
-            </span>
+            Are you overpaying tax in your trade/construction business?
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--awts-subheader)]">
